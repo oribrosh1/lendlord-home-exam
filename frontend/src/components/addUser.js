@@ -11,6 +11,7 @@ export default function AddUser() {
         lastName: '',
         dateStarted: '',
         email: '',
+        role: '',
         salary: ''
     });
 
@@ -80,6 +81,20 @@ export default function AddUser() {
                                     onChange={handleChange}
                                 />
                             </div>
+                            <div className="form-group">
+                                <label htmlFor="email">Role</label>
+                                <select
+                                    name="role"
+                                    value={formData.role}
+                                    onChange={handleChange}
+                                    placeholder="Filter by Role"
+                                >
+                                    <option value="manager">manager</option>
+                                    <option value="worker">worker</option>
+                                    <option value="driver">driver</option>
+                                </select>
+                            </div>
+
                             <div className="form-group">
                                 <label htmlFor="salary">Salary</label>
                                 <input

@@ -27,9 +27,9 @@ export const UserProvider = ({ children }) => {
 
 
     const handleAddSubmit = async (data) => {
-        const { firstName, lastName, email, salary, dateStarted } = data
+        const { firstName, lastName, email, salary, dateStarted, role } = data
         try {
-            const res = await axiosInstance.post(`/user`, { firstName, lastName, email, salary, dateStarted });
+            const res = await axiosInstance.post(`/user`, { firstName, lastName, email, salary, dateStarted, role });
             const newUsers = [...users, res.data]
             setUsers(newUsers);
             closeModal();

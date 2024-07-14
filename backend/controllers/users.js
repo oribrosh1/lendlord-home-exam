@@ -39,7 +39,6 @@ exports.getAllUsers = async ctx => {
 exports.createUser = async ctx => {
   try {
     const newUser = await users.createUser(ctx.request.body);
-
     ctx.status = 201;
     ctx.body = newUser
   } catch (err) {

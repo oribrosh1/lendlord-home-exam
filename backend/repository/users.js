@@ -1,3 +1,4 @@
+const { USER_ROLES } = require('../constants');
 const usersModel = require('../models/users')
 
 class Users {
@@ -10,7 +11,15 @@ class Users {
   }
 
   async insert(userData) {
-    const newUser = new usersModel(userData);
+    const newUser = new usersModel({
+      salary: Number(userData.salary),
+      dateStarted: new Date(userData.dateStarted),
+      email: userData.email,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      role: USER_ROLES.MANAGER
+    });
+    console.log(newUser);
     return await newUser.save();
   }
 
