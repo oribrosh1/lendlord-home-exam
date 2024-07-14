@@ -53,8 +53,6 @@ exports.createUser = async ctx => {
  */
 exports.updateUser = async ctx => {
   const { id } = ctx.params
-  console.log("calll");
-  console.log(id);
   try {
     const updatedUser = await users.updateUser({ _id: new ObjectId(id) }, ctx.request.body);
 

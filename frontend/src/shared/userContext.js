@@ -30,7 +30,6 @@ export const UserProvider = ({ children }) => {
         const { firstName, lastName, email, salary, dateStarted } = data
         try {
             const res = await axiosInstance.post(`/user`, { firstName, lastName, email, salary, dateStarted });
-            console.log("handleAddSubmit", res);
             const newUsers = [...users, res.data]
             setUsers(newUsers);
             closeModal();
@@ -63,10 +62,8 @@ export const UserProvider = ({ children }) => {
 
     const handleUpdateSubmit = async ({ _id, firstName, lastName, email, salary }) => {
         try {
-            console.log(axiosInstance.interceptors.request);
 
             const res = await axiosInstance.put(`/user/${_id}`, { firstName, lastName, email, salary });
-            console.log("handleUpdateSubmit", res);
             const mappedUsers = users.map(user => {
                 if (user._id === _id) {
                     return { ...user, firstName, lastName, email, salary };

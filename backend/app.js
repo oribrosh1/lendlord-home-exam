@@ -29,20 +29,7 @@ if (runMode === 'app') {
       }
     })
   )
-  console.log("cors");
 
-  // server.use(
-  //   koaCors({
-  //     origin(ctx) {
-  //       console.log(ctx);
-  //       console.log(ctx.get('Origin'));
-  //       return 'http://localhost:3001';
-  //     },
-  //     methods: 'POST, GET, PUT, DELETE, OPTIONS',
-  //     allowMethods: 'Origin, X-Requested-With, Content-Type, Accept',
-  //     credentials: true
-  //   })
-  // )
   const options = {
     origin: '*'
   };
