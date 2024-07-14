@@ -24,7 +24,7 @@ function Modal({
   }, [handleKeyUp]);
 
   const clickedOutside = () => {
-    closeModal()
+    closeModal();
   };
 
   const divStyle = {
@@ -37,10 +37,10 @@ function Modal({
         className={'basic-modal-content'}
         onClick={e => e.stopPropagation()}
       >
-        
-          <button type="button" className="close" aria-label="Close" onClick={closeModal}>
-            <span aria-hidden="true">&times;</span>
-          </button>
+
+        <button type="button" className="close" aria-label="Close" onClick={closeModal}>
+          <span aria-hidden="true">&times;</span>
+        </button>
         {children}
       </div>
     </div>

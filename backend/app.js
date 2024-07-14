@@ -4,7 +4,7 @@ global.APP_ENV = APP_ENV
 const config = require('./config/config').get(APP_ENV)
 global.config = config
 require('events').EventEmitter.defaultMaxListeners = 5
-
+log.info(`./.env.${APP_ENV}`)
 require('dotenv').config({ path: `./.env.${APP_ENV}` })
 const Koa = require('koa')
 const koaCors = require('@koa/cors')
@@ -29,9 +29,15 @@ if (runMode === 'app') {
       }
     })
   )
+  console.log("cors");
 
   server.use(
     koaCors({
+      origin(ctx) {
+        console.log(ctx);
+        console.log(ctx.get('Origin'));
+        return 'http://localhost:3001';
+      },
       methods: 'POST, GET, PUT, DELETE, OPTIONS',
       allowMethods: 'Origin, X-Requested-With, Content-Type, Accept',
       credentials: true

@@ -3,13 +3,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createRoot } from 'react-dom/client';
+import { UserProvider } from './shared/userContext';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
   <StrictMode>
-    <App />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </StrictMode>
 );
 

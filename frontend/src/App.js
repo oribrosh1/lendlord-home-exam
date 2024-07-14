@@ -1,23 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './App.css';
-import GenericModal from './components/modal';
 import Header from './components/header';
+import AddUser from './components/addUser';
+import FilterUsers from './components/filterUsers';
+import UserTable from './components/userTable';
+import UpdateUser from './components/updateUser';
 
 function App() {
-
-  const [shown, setShown] = useState(false)
-
-  const toggleModal = () => setShown(prev => !prev)
 
   return (
     <div className="App">
       <Header />
       <div id="content">
-      <button onClick={toggleModal}>Add User</button>
-        <GenericModal displayModal={shown} closeModal={toggleModal}>
-          <h1>Add New User</h1>
-        </GenericModal>
+        <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+          <AddUser />
+          <FilterUsers />
+        </div>
+        <UpdateUser />
+
+        <UserTable />
       </div>
     </div>
   );

@@ -5,3 +5,16 @@
   padding: 20px 0;
   border-bottom: 1px solid #cccccc;
 }
+
+th {
+  cursor: pointer;
+  position: relative;
+}
+
+th:hover {
+  background-color: #f4f4f4;
+}
+
+body * {
+  overflow-x: hidden;
+}

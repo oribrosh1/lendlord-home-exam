@@ -1,0 +1,52 @@
+/* UserTable.css */
+.table-container {
+  width: 98%;
+  overflow-x: hidden;
+  margin: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+.action-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.edit {
+  color: #4CAF50;
+}
+
+.delete {
+  color: #F44336;
+}
+
+@media screen and (max-width: 600px) {
+
+  th,
+  td {
+    padding: 10px 8px;
+  }
+}
