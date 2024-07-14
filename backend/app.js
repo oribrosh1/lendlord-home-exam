@@ -36,7 +36,7 @@ if (runMode === 'app') {
 
   server.use(koaCors(options));
   server.use(async (ctx, next) => {
-    ctx.set('Access-Control-Allow-Origin', '*');
+    ctx.set('Access-Control-Allow-Origin', 'http://localhost:3001');
     ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     await next();
   });

@@ -28,7 +28,7 @@ async function createFakeUsers(numUsers = 50) {
 
     function createRandomUser(managers = []) {
         const role = faker.helpers.arrayElement(Object.values(USER_ROLES));
-        const managerId = role !== 'Manager' && managers.length ? faker.helpers.arrayElement(managers) : undefined;
+        const managerId = role !== 'manager' && managers.length ? faker.helpers.arrayElement(managers) : undefined;
 
         return {
             _id: new mongoose.Types.ObjectId(), // Generate a valid MongoDB ObjectId

@@ -1,18 +1,15 @@
 import { useContext } from 'react'
 import GenericModal from './modal'
 import { UserContext } from '../shared/userContext'
-import { FaPlusCircle } from 'react-icons/fa';
 import './addUser.css'
 
-export default function AddUser() {
-    const { shown, closeModal, openModel, typeOfModel, err } = useContext(UserContext)
+export default function ErrorModel() {
+    const { shown, closeModal, typeOfModel, err } = useContext(UserContext)
     return (
         <div>
-
-
             {
-                typeOfModel.includes("error") &&
-                <GenericModal displayModal={shown} closeModal={closeModal}>
+                typeOfModel === "error" &&
+                <GenericModal style={{ zIndex: 10 }} displayModal={shown} closeModal={closeModal}>
                     <h1>Error</h1>
                     <h3>
                         {err}

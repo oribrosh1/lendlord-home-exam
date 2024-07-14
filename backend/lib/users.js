@@ -17,6 +17,11 @@ class Users {
     return await this.repo.findAll(query, projection);
   }
 
+  async findAllManagers(query = {}, projection = {}) {
+    return await this.repo.findAllManagers(query, projection);
+  }
+
+
   async createUser(userData) {
     return await this.repo.insert(userData);
   }

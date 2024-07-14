@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
     const [shown, setShown] = useState(false)
     const [selectedUserToUpdate, setSelectedUserToUpdate] = useState(null)
     const [typeOfModel, setTypeOfModel] = useState("")
+    const [managers, setManagers] = useState([]);
     const [users, setUsers] = useState([]);
     const [filterQuery, setFilterQuery] = useState('');
     const [sortConfig, setSortConfig] = useState(null);
@@ -24,18 +25,32 @@ export const UserProvider = ({ children }) => {
         setShown(true)
         setTypeOfModel(type)
     }
-
+    const getManagers = async () => {
+        try {
+            const res = await axiosInstance.get(`/managers`);
+            setManagers(res.data);
+        } catch (error) {
+            console.error('Failed to get managers:', error.message);
+            setErr(error.message)
+            openModel(`error`)
+        }
+    }
 
     const handleAddSubmit = async (data) => {
-        const { firstName, lastName, email, salary, dateStarted, role } = data
         try {
-            const res = await axiosInstance.post(`/user`, { firstName, lastName, email, salary, dateStarted, role });
-            const newUsers = [...users, res.data]
+            const res = await axiosInstance.post(`/user`, data);
+            console.log(res.status);
+            if (res.status !== 201) {
+                console.error('Failed to update user:', res.data);
+                setErr(res.data)
+                openModel(`error`)
+            }
+            const newUsers = [...users, { ...(res.data), manager: data.manager }]
             setUsers(newUsers);
             closeModal();
         } catch (error) {
-            console.error('Failed to update user:', error);
-            setErr(error)
+            console.error('Failed to update user:', error.message);
+            setErr(error.message)
             openModel(`error`)
         }
     }
@@ -47,8 +62,8 @@ export const UserProvider = ({ children }) => {
             setUsers(filteredUsers)
             closeModal()
         } catch (error) {
-            console.error('Failed to delete user:', error);
-            setErr(error)
+            console.error('Failed to delete user:', error.message);
+            setErr(error.message)
             openModel(`error`)
         }
     }
@@ -62,8 +77,7 @@ export const UserProvider = ({ children }) => {
 
     const handleUpdateSubmit = async ({ _id, firstName, lastName, email, salary }) => {
         try {
-
-            const res = await axiosInstance.put(`/user/${_id}`, { firstName, lastName, email, salary });
+            await axiosInstance.put(`/user/${_id}`, { firstName, lastName, email, salary });
             const mappedUsers = users.map(user => {
                 if (user._id === _id) {
                     return { ...user, firstName, lastName, email, salary };
@@ -73,8 +87,8 @@ export const UserProvider = ({ children }) => {
             setUsers(mappedUsers);
             closeModal();
         } catch (error) {
-            console.error('Failed to update user:', error);
-            setErr(error)
+            console.error('Failed to update user:', error.message);
+            setErr(error.message)
             openModel(`error`)
         }
     }
@@ -101,6 +115,7 @@ export const UserProvider = ({ children }) => {
             }
             return a[sortConfig.field].localeCompare(b[sortConfig.field], undefined, { numeric: true }) * isAscending;
         });
+
     useEffect(() => {
         const fetchData = async () => {
             const res = await axiosInstance.get("/users")
@@ -108,8 +123,9 @@ export const UserProvider = ({ children }) => {
         }
         fetchData()
     }, [])
+
     return (
-        <UserContext.Provider value={{ setUsers, sortConfig, sortedFilteredUsers, handleAddSubmit, handleSort, setFilterQuery, shown, typeOfModel, closeModal, openModel, handleDelete, handleUpdateSubmit, handleUpdate, selectedUserToUpdate, err }}>
+        <UserContext.Provider value={{ setUsers, sortConfig, sortedFilteredUsers, handleAddSubmit, handleSort, setFilterQuery, shown, typeOfModel, closeModal, openModel, handleDelete, handleUpdateSubmit, handleUpdate, selectedUserToUpdate, managers, getManagers, err }}>
             {children}
         </UserContext.Provider>
     );

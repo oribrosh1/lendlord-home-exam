@@ -3,25 +3,33 @@ const usersModel = require('../models/users')
 
 class Users {
   async findOne(query, projection = {}) {
-    return await usersModel.findOne(query).select(projection).populate('manager');
+    return await usersModel.findOne(query).select(projection).populate({
+      path: 'manager',
+      select: '_id firstName lastName'
+    });
   }
 
   async findAll(query = {}, projection = {}) {
-    return await usersModel.find(query).select(projection).populate('manager');
+    return await usersModel.find(query).select(projection).populate({
+      path: 'manager',
+      select: '_id firstName lastName'
+    });
+  }
+  async findAllManagers(query = { role: USER_ROLES.MANAGER }, projection = {}) {
+    return await usersModel.find(query).select(projection).populate({
+      path: 'manager',
+      select: '_id firstName lastName'
+    });
   }
 
+
+  // parsing the userData
   async insert(userData) {
-    const newUser = new usersModel({
-      salary: Number(userData.salary),
-      dateStarted: new Date(userData.dateStarted),
-      email: userData.email,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      role: USER_ROLES.MANAGER
-    });
-    console.log(newUser);
+    const newUser = new usersModel(userData);
     return await newUser.save();
   }
+
+
 
   async update(query, updateData) {
     return await usersModel.updateOne(query, { $set: updateData }, { new: true });

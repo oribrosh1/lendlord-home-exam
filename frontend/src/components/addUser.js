@@ -1,32 +1,52 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import GenericModal from './modal'
 import { UserContext } from '../shared/userContext'
 import { FaPlusCircle } from 'react-icons/fa';
 import './addUser.css'
 
 export default function AddUser() {
-    const { shown, closeModal, openModel, typeOfModel, handleAddSubmit } = useContext(UserContext)
+    const { shown, closeModal, openModel, typeOfModel, handleAddSubmit, getManagers, managers } = useContext(UserContext)
+    const [seeManagers, setSeeManagers] = useState(false)
+    const [manager, setManager] = useState()
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         dateStarted: '',
         email: '',
-        role: '',
-        salary: ''
+        role: 'manager',
+        salary: '',
+        managerId: ''
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if (name === 'role') {
+            if (value !== 'manager') {
+                setSeeManagers(true)
+                getManagers()
+            } else {
+                setSeeManagers(false)
+            }
+        }
+        if (name === "managerId") {
+            console.log(managers);
+            console.log(managers?.find(x => x?._id === value));
+            setManager(managers?.find(x => x?._id === value))
+        }
         setFormData(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleAddSubmit(formData)
+        handleAddSubmit({ ...formData, manager })
     };
+
+
 
     return (
         <div>
@@ -94,6 +114,19 @@ export default function AddUser() {
                                     <option value="driver">driver</option>
                                 </select>
                             </div>
+
+                            {seeManagers && managers?.length > 0 &&
+                                <div className="form-group">
+                                    <label htmlFor="email">Manager</label>
+                                    <select
+                                        name="managerId"
+                                        value={formData.manager?._id}
+                                        onChange={handleChange}
+                                        placeholder="managed by"
+                                    >
+                                        {managers.map((m) => <option value={m._id}>{`${m.firstName} ${m.lastName}`}</option>)}
+                                    </select>
+                                </div>}
 
                             <div className="form-group">
                                 <label htmlFor="salary">Salary</label>
